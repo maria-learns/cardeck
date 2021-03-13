@@ -31,9 +31,42 @@ app.get('/available-games/:player_id', function(req, res, next) {
 	res.status(200).json(result);
 });
 
+//get all the modules
+app.post('/available-games', function(req, res, next) {
+
+	var playerId = req.cookies["authentication"];
+
+	var result = games.where(function(element) {
+		return element.status == "OPEN" &&
+			(element.playerOne.id == req.params.player_id  || element.playerTwo.id == req.params.player_id);
+	});
+
+	res.status(200).json(result);
+});
+
+app.post("login", function(req, res, next) {
+	var auth = req.headers["Authorization"];
+
+});
+
+
+app.get('/example-view', function(req, res, next) {
+ 	res.sendFile('public/index.html');
+});
+
+
+app.post('/example-view', function(req, res, next) {
+ 	res.status(200).json(modules);
+});
+
+
+
 const max_playersno = 2;
 
-const games = {}
+const games = {
+	"1": new Game(...),
+	"2": new Game(...)
+}
 
 const cards = {}
 
